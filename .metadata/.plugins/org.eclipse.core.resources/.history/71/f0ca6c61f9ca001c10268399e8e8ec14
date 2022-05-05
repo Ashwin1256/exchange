@@ -1,0 +1,6 @@
+package com.currency.conversion;
+
+@Configuration
+public class SecurityConfig extends SpringSecurityConfigAdaptor {
+
+}

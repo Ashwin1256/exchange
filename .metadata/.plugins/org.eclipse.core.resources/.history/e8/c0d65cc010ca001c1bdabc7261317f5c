@@ -1,0 +1,33 @@
+package com.currency.conversion;
+
+import java.math.BigDecimal;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class CurrencyConversionController {
+	
+	@Autowired
+	private Environment environment;
+	
+	@Autowired
+	
+	private CurrencyExchange cs ;
+	
+	@GetMapping("/currency-conversion/from/{from}/to/{to}/quantity/{quantity}")
+	public CurrencyConversion calculateCurrencyConversion(@PathVariable String from, @PathVariable String to,
+			@PathVariable BigDecimal quantity) {
+		
+		CurrencyConversion cc = cs.retrieveExchangevalue(from, to);
+		String port = environment.getProperty("local.server.port");
+		
+		return new CurrencyConversion(1000L,cc.getFrom_County(),cc.getTo_County(),cc.getConversionMultiple(),cc.getQuantity(),cc.getTotalCalculateAmount(),port);
+		
+		
+	}
+
+}
